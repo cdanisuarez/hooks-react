@@ -14,7 +14,24 @@ const Characters = () => {
     <main className="characters">
       {characters.map(character => (
         <div className="character">
-          <h2>{character.name}</h2>
+          <img className="character__image" src={character.image} />
+          <h2 className="character__name">{character.name}</h2>
+          <ul className="character__details">
+            <li className="character__details-item">
+              <span className="details-item__title">Status: </span>
+              <span className="details-item__value">{character.status}</span>
+            </li>
+
+            <li className="character__details-item">
+              <span className="details-item__title">Gender: </span>
+              <span className="details-item__value">{character.gender}</span>
+            </li>
+
+            <li className="character__details-item">
+              <span className="details-item__title">Species: </span>
+              <span className="details-item__value">{character.species}</span>
+            </li>
+          </ul>
         </div>
       ))}
     </main>
