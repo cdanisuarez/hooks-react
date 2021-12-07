@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
+import { ThemeContext } from '../../context/ThemeContext';
 import './Header.css';
 
-const Header = ({ handleDarkMode }) => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+const Header = () => {
+  const { isDarkMode, setIsDarkMode } = useContext(ThemeContext);
 
-  const handleClick = () => {
-    setIsDarkMode(!isDarkMode);
-    handleDarkMode(!isDarkMode);
-  };
+  const handleClick = () => setIsDarkMode(!isDarkMode);
 
   return (
     <header className="header">

@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
+
+import { ThemeContext } from './context/ThemeContext';
+
 import Header from './components/Header/Header';
 import Characters from './components/Characters/Characters';
 import './App.css';
 
 const App = () => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
-
-  const handleIsDarkMode = (isDarkMode) => setIsDarkMode(isDarkMode);
+  const { isDarkMode } = useContext(ThemeContext);
 
   return (
     <div className={`app--${isDarkMode ? 'dark' : 'light'}`}>
-      <Header handleDarkMode={handleIsDarkMode} />
+      <Header />
       <Characters />
     </div>
   );
