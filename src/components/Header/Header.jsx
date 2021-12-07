@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import './Header.css';
 
-const Header = () => {
+const Header = ({ handleDarkMode }) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
-  const handleClick = () => setIsDarkMode(!isDarkMode);
+  const handleClick = () => {
+    setIsDarkMode(!isDarkMode);
+    handleDarkMode(!isDarkMode);
+  };
 
   return (
     <header className="header">

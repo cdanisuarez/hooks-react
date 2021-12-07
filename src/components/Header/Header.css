@@ -16,12 +16,10 @@
 
 .header__button--light {
   background-color: #f5f5f5;
-  border: 1px solid #f5f5f5;
-  color: #000;
+  border: 1px solid #000;
 }
 
 .header__button--dark {
-  background-color: #000;
-  border: 1px solid #000;
-  color: #fff;
+  background-color: #f5f5f5;
+  border: 1px solid #f5f5f5;
 }
