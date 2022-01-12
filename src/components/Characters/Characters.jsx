@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect, useReducer, useMemo } from 'react';
 import { INITIAL_STATE, ACTIONS, favoriteReducer } from '../../reducer/FavoritesReducer';
 import './Characters.css';
 
@@ -13,7 +13,10 @@ const Characters = () => {
       .then(data => setCharacters(data.results));
   }, []);
 
-  const filteredCharacters = characters.filter(({ name }) => name.toLowerCase().includes(search.toLocaleLowerCase()));
+  const filteredCharacters = useMemo(() =>
+    characters.filter(({ name }) => name.toLowerCase().includes(search.toLocaleLowerCase())),
+    [characters, search],
+  );
   const isInFavorites = (favorite) => favorites.favorites.includes(favorite);
   const handleAddToFavs = (favorite) => dispatchFavorites({ type: ACTIONS.add, payload: favorite });
   const handleRemoveFromFavs = (favorite) => dispatchFavorites({ type: ACTIONS.remove, payload: favorite });
