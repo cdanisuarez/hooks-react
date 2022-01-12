@@ -4,6 +4,7 @@ import './Characters.css';
 
 const Characters = () => {
   const [characters, setCharacters] = useState([]);
+  const [search, setSearch] = useState('');
   const [favorites, dispatchFavorites] = useReducer(favoriteReducer, INITIAL_STATE);
 
   useEffect(() => {
@@ -12,12 +13,18 @@ const Characters = () => {
       .then(data => setCharacters(data.results));
   }, []);
 
+  const filteredCharacters = characters.filter(({ name }) => name.toLowerCase().includes(search.toLocaleLowerCase()));
   const isInFavorites = (favorite) => favorites.favorites.includes(favorite);
   const handleAddToFavs = (favorite) => dispatchFavorites({ type: ACTIONS.add, payload: favorite });
-  const handleRemoveFromFavs = (favorite) => dispatchFavorites({type: ACTIONS.remove, payload: favorite });
+  const handleRemoveFromFavs = (favorite) => dispatchFavorites({ type: ACTIONS.remove, payload: favorite });
+  const handleSearch = (event) => setSearch(event.target.value);
 
   return (
     <main>
+      <section className="search">
+        <input className="search__input" type="text" placeholder="Search" onChange={handleSearch} />
+      </section>
+
       <section className="favorites">
         {
           favorites.favorites.length > 0 && <h2 className="favorites__title">Favorites: </h2>
@@ -30,9 +37,9 @@ const Characters = () => {
       </section>
 
       <section className="characters">
-        {characters.map(character => (
+        {filteredCharacters.map(character => (
           <div className="character" key={character.id}>
-            <img className="character__image" src={character.image} />
+            <img className="character__image" src={character.image} alt={character.name} />
             <h2 className="character__name">{character.name}</h2>
             <ul className="character__details">
               <li className="character__details-item">
@@ -52,7 +59,7 @@ const Characters = () => {
             </ul>
             <div className="character__details-actions">
               {
-                !isInFavorites(character) 
+                !isInFavorites(character)
                   ? <button className="details-actions__fav" type="button" onClick={() => handleAddToFavs(character)}>
                     Add to favorites
                   </button>
