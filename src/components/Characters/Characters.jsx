@@ -12,9 +12,9 @@ const Characters = () => {
       .then(data => setCharacters(data.results));
   }, []);
 
-  const handleClick = (favorite) => {
-    dispatchFavorites({ type: ACTIONS.add, payload: favorite });
-  };
+  const isInFavorites = (favorite) => favorites.favorites.includes(favorite);
+  const handleAddToFavs = (favorite) => dispatchFavorites({ type: ACTIONS.add, payload: favorite });
+  const handleRemoveFromFavs = (favorite) => dispatchFavorites({type: ACTIONS.remove, payload: favorite });
 
   return (
     <main>
@@ -50,9 +50,17 @@ const Characters = () => {
                 <span className="details-item__value">{character.species}</span>
               </li>
             </ul>
-            <button className="character__fav" type="button" onClick={() => handleClick(character)}>
-              Add to favorites
-            </button>
+            <div className="character__details-actions">
+              {
+                !isInFavorites(character) 
+                  ? <button className="details-actions__fav" type="button" onClick={() => handleAddToFavs(character)}>
+                    Add to favorites
+                  </button>
+                  : <button className="details-actions__fav" type="button" onClick={() => handleRemoveFromFavs(character)}>
+                    Remove from favorites
+                  </button>
+              }
+            </div>
           </div>
         ))}
       </section>
