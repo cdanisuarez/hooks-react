@@ -1,19 +1,15 @@
-import React, { useState, useEffect, useReducer, useMemo, useRef } from 'react';
+import React, { useState, useReducer, useMemo, useRef } from 'react';
 import { INITIAL_STATE, ACTIONS, favoriteReducer } from '../../reducer/FavoritesReducer';
 import Search from '../Search/Search';
+import useCharacters from '../../hooks/useCharacters';
 import './Characters.css';
 
 const Characters = () => {
-  const [characters, setCharacters] = useState([]);
+  // const [characters, setCharacters] = useState([]);
+  const characters = useCharacters('https://rickandmortyapi.com/api/character/');
   const [search, setSearch] = useState('');
   const [favorites, dispatchFavorites] = useReducer(favoriteReducer, INITIAL_STATE);
   const searchInput = useRef(null);
-
-  useEffect(() => {
-    fetch('https://rickandmortyapi.com/api/character/')
-      .then(res => res.json())
-      .then(data => setCharacters(data.results));
-  }, []);
 
   const filteredCharacters = useMemo(() =>
     characters.filter(({ name }) => name.toLowerCase().includes(search.toLocaleLowerCase())),
