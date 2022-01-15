@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useReducer, useMemo, useRef } from 'react';
 import { INITIAL_STATE, ACTIONS, favoriteReducer } from '../../reducer/FavoritesReducer';
+import Search from '../Search/Search';
 import './Characters.css';
 
 const Characters = () => {
@@ -18,6 +19,7 @@ const Characters = () => {
     characters.filter(({ name }) => name.toLowerCase().includes(search.toLocaleLowerCase())),
     [characters, search],
   );
+
   const isInFavorites = (favorite) => favorites.favorites.includes(favorite);
   const handleAddToFavs = (favorite) => dispatchFavorites({ type: ACTIONS.add, payload: favorite });
   const handleRemoveFromFavs = (favorite) => dispatchFavorites({ type: ACTIONS.remove, payload: favorite });
@@ -25,9 +27,7 @@ const Characters = () => {
 
   return (
     <main>
-      <section className="search">
-        <input className="search__input" type="text" placeholder="Search" onChange={handleSearch} ref={searchInput} />
-      </section>
+      <Search search={search} searchInput={searchInput} handleSearch={handleSearch} />
 
       <section className="favorites">
         {
